@@ -7,5 +7,5 @@ def hello(request):
     return HttpResponse("Hello World")
 
 
-def job_detail(request):
-    return HttpResponse("Job Detail Page")
+def job_detail(request, id):
+    return HttpResponse(f"Job Detail Page {id}")
