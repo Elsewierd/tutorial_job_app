@@ -1,6 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+job_title = ["First Job", "Second Job"]
+
+job_description = ["First Job Description", "Second Job Description"]
+
 
 # Create your views here.
 def hello(request):
@@ -8,4 +12,5 @@ def hello(request):
 
 
 def job_detail(request, id):
-    return HttpResponse(f"Job Detail Page {id}")
+    return_html = f"<h1>{job_title[id]}</h1> <h3>{job_description[]}</h3>"
+    return HttpResponse(return_html)
