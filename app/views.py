@@ -12,5 +12,5 @@ def hello(request):
 
 
 def job_detail(request, id):
-    return_html = f"<h1>{job_title[id]}</h1> <h3>{job_description[]}</h3>"
+    return_html = f"<h1>{job_title[id]}</h1> <h3>{job_description[id]}</h3>"
     return HttpResponse(return_html)
