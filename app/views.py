@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 job_title = ["First Job", "Second Job"]
 
@@ -7,10 +8,30 @@ job_description = ["First Job Description", "Second Job Description"]
 
 
 # Create your views here.
-def hello(request):
-    return HttpResponse("Hello World")
+def job_list(request):
+    """Render the Job List Page.
+
+    :param HTTPRequest request: The HTTP request object
+    :return HTTPResponce: The HTTP Responce containing the Job List.
+    """
+    return_html = f"""<ul>{''.join([f'<li><a href={reverse("job_detail", args=(index,))}>{job}</a></li>' for index, job in enumerate(job_title)])}</ul>"""
+    return HttpResponse(return_html)
 
 
 def job_detail(request, id):
+    """Render the Job Detail Page.
+    <domain>/job/<int:id>
+
+    This view displays detailed information about a job based on the provided job ID.
+
+    :param HTTPRequest request: The HTTP request object.
+    :param int id: Job ID number
+    :return HTTPResponce: The HTTP response containing the job details page.
+    """
+    if id == 0:
+        # Redirects to the home page if the ID is 0.
+        return redirect(reverse("job_home"))
+
+    # Builds the HTML content for the details page.
     return_html = f"<h1>{job_title[id]}</h1> <h3>{job_description[id]}</h3>"
     return HttpResponse(return_html)
