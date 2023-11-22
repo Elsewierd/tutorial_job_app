@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -27,11 +27,17 @@ def job_detail(request, id):
     :param HTTPRequest request: The HTTP request object.
     :param int id: Job ID number
     :return HTTPResponce: The HTTP response containing the job details page.
+    :raise Http404: Job ID does not exisit
     """
     if id == 0:
         # Redirects to the home page if the ID is 0.
         return redirect(reverse("job_home"))
 
+    try:
+        job_title_text, job_description_text = job_title[id], job_description[id]
+    except IndexError:
+        raise HttpResponseNotFound("Job not found.")
+
     # Builds the HTML content for the details page.
-    return_html = f"<h1>{job_title[id]}</h1> <h3>{job_description[id]}</h3>"
+    return_html = f"<h1>{job_title_text}</h1> <h3>{job_description_text}</h3>"
     return HttpResponse(return_html)
