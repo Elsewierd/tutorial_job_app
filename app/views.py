@@ -34,10 +34,11 @@ def job_detail(request, id):
         return redirect(reverse("job_home"))
 
     try:
-        job_title_text, job_description_text = job_title[id], job_description[id]
+        context = {"job_title": job_title[id], "job_description": job_description[id]}
     except IndexError:
         raise HttpResponseNotFound("Job not found.")
 
     # Builds the HTML content for the details page.
-    return_html = f"<h1>{job_title_text}</h1> <h3>{job_description_text}</h3>"
-    return HttpResponse(return_html)
+    #! return_html = f"<h1>{job_title_text}</h1> <h3>{job_description_text}</h3>"
+    #! return HttpResponse(return_html)
+    return render(request, "app/job_detail.html", context)
